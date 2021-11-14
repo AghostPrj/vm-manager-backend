@@ -11,5 +11,15 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# logs
+**/logs
+
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
+
+# jetbrains files
+**/.idea
+**/**.iml
+
+# go mod sum
+**/go.sum
