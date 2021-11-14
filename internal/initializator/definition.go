@@ -7,11 +7,12 @@
 
 package initializator
 
-import "time"
+import (
+	"github.com/AghostPrj/vm-manager-backend/internal/global"
+	"time"
+)
 
 const (
-	ApplicationName = "vm-manager"
-
 	ConfGoProcNumKey = "app.runtime.proc.num"
 	EnvGoProcNumKey  = "app_runtime_proc_num"
 	DefaultGoProcNum = 2
@@ -29,7 +30,7 @@ const (
 
 	ConfDbNameKey = "app.db.name"
 	EnvDbNameKey  = "app_db_name"
-	DefaultDbName = ApplicationName
+	DefaultDbName = global.ApplicationName
 
 	ConfDbHostKey = "app.db.host"
 	EnvDbHostKey  = "app_db_host"

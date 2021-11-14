@@ -9,6 +9,12 @@ package initializator
 
 import (
 	"github.com/AghostPrj/vm-manager-backend/internal/global"
+	"github.com/AghostPrj/vm-manager-backend/internal/model/userModel"
+	"github.com/AghostPrj/vm-manager-backend/internal/model/vmDiskModel"
+	"github.com/AghostPrj/vm-manager-backend/internal/model/vmListModel"
+	"github.com/AghostPrj/vm-manager-backend/internal/model/vmMacModel"
+	"github.com/AghostPrj/vm-manager-backend/internal/model/vmPciModel"
+	"github.com/AghostPrj/vm-manager-backend/internal/model/vmPortModel"
 	"github.com/ggg17226/aghost-go-base/pkg/utils/configUtils"
 	gorm_logrus "github.com/onrik/gorm-logrus"
 	log "github.com/sirupsen/logrus"
@@ -18,7 +24,7 @@ import (
 )
 
 func InitApp() {
-	configUtils.SetConfigFileName(ApplicationName)
+	configUtils.SetConfigFileName(global.ApplicationName)
 	bindAppConfigKey()
 	bindAppConfigDefaultValue()
 	configUtils.InitConfigAndLog()
@@ -95,7 +101,9 @@ func initDbClient() {
 		"max_conn_life": viper.GetDuration(ConfDbConnLifeKey),
 		"max_conn_idle": viper.GetDuration(ConfDbConnMaxIdleKey),
 	}).Trace("db dsn")
-	DBClient, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+	DBClient, err := gorm.Open(mysql.New(mysql.Config{
+		DSN: dsn,
+	}), &gorm.Config{
 		Logger:                 gorm_logrus.New(),
 		PrepareStmt:            false,
 		SkipDefaultTransaction: true,
@@ -122,7 +130,25 @@ func initDbClient() {
 	global.DBClient = DBClient
 
 	if viper.GetBool(ConfDbAutoMigrateKey) {
-		// global.DBClient.AutoMigrate(&QuestionModel.Question{})
+		global.DBClient.AutoMigrate(&vmDiskModel.VmDisk{})
+		global.DBClient.AutoMigrate(&vmPciModel.VmPci{})
+		global.DBClient.AutoMigrate(&vmMacModel.VmMac{})
+		global.DBClient.AutoMigrate(&vmPortModel.VmPort{})
+		global.DBClient.AutoMigrate(&vmListModel.VmList{})
+		global.DBClient.AutoMigrate(&userModel.User{})
+		if !userModel.CheckDefaultUserExist() {
+			user, password, err := userModel.CreateUserWithoutPassword(global.DefaultUserName)
+			if err != nil {
+				log.WithField("err", err).
+					WithField("op", "init").
+					Panic("create default admin user error")
+			}
+			log.WithFields(log.Fields{
+				"user":     user.Name,
+				"password": password,
+				"otp":      user.Otp,
+			}).Info("create default admin user")
+		}
 	}
 
 	log.WithFields(log.Fields{
