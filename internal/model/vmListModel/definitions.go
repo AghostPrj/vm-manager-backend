@@ -12,7 +12,7 @@ import (
 )
 
 type VmList struct {
-	Id          uint64     `gorm:"PRIMARY_KEY;AUTO_INCREMENT;Column:id"`
+	Id          uint64     `gorm:"PRIMARY_KEY;AUTO_INCREMENT;Column:id;<-:false"`
 	Name        string     `gorm:"type:varchar(128);Column:name;NOT NULL"`
 	Cpu         int32      `gorm:"Column:cpu;NOT NULL"`
 	Mem         int32      `gorm:"Column:mem;NOT NULL"`

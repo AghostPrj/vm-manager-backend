@@ -5,14 +5,17 @@
  * @Desc:
  */
 
-package initializator
+package constData
 
 import (
-	"github.com/AghostPrj/vm-manager-backend/internal/global"
 	"time"
 )
 
 const (
+	DefaultUserName   = "admin"
+	ApplicationName   = "vm-manager"
+	AuthCodeHeaderKey = "x-aghost-auth-code"
+
 	ConfGoProcNumKey = "app.runtime.proc.num"
 	EnvGoProcNumKey  = "app_runtime_proc_num"
 	DefaultGoProcNum = 2
@@ -30,7 +33,7 @@ const (
 
 	ConfDbNameKey = "app.db.name"
 	EnvDbNameKey  = "app_db_name"
-	DefaultDbName = global.ApplicationName
+	DefaultDbName = ApplicationName
 
 	ConfDbHostKey = "app.db.host"
 	EnvDbHostKey  = "app_db_host"
@@ -87,4 +90,12 @@ const (
 	ConfDbConnMaxIdleKey = "app.db.conn_idle"
 	EnvDbConnMaxIdleKey  = "app_db_conn_idle"
 	DefaultDbConnMaxIdle = time.Minute * 15
+
+	ConfDebugFlagKey = "app.debug"
+	EnvDebugFlagKey  = "app_debug"
+	DefaultDebugFlag = false
+
+	ConfAuthExpireTimeKey = "app.auth.expire"
+	EnvAuthExpireTimeKey  = "app_auth_expire"
+	DefaultAuthExpireTime = time.Minute * 15
 )

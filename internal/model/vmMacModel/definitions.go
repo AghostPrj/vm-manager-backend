@@ -8,7 +8,7 @@
 package vmMacModel
 
 type VmMac struct {
-	Id   uint64 `gorm:"PRIMARY_KEY;AUTO_INCREMENT;Column:id"`
+	Id   uint64 `gorm:"PRIMARY_KEY;AUTO_INCREMENT;Column:id;<-:false"`
 	VmId uint64 `gorm:"Column:vm_id;NOT NULL"`
 	Mac  string `gorm:"type:char(17);Column:mac;NOT NULL"`
 }

@@ -8,12 +8,13 @@
 package initializator
 
 import (
+	"github.com/AghostPrj/vm-manager-backend/internal/constData"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
 func checkHostNetType() {
-	hostNetType := viper.GetString(ConfHostNetTypeConfigKey)
+	hostNetType := viper.GetString(constData.ConfHostNetTypeConfigKey)
 	if len(hostNetType) < 1 {
 		log.WithField("op", "startup").Panic("host net type not set")
 	}
@@ -23,7 +24,7 @@ func checkHostNetType() {
 }
 
 func checkHttpListenConfig() {
-	listenPort := viper.GetInt(ConfServerListenPortKey)
+	listenPort := viper.GetInt(constData.ConfServerListenPortKey)
 	if !(listenPort > 0 && listenPort < 65536) {
 		log.WithField("op", "startup").Panic("listen port out of range")
 	}

@@ -7,10 +7,31 @@
 
 package userModel
 
+import (
+	"github.com/AghostPrj/vm-manager-backend/internal/utils/cryptUtils"
+	"time"
+)
+
 type User struct {
-	Id       uint64 `gorm:"PRIMARY_KEY;AUTO_INCREMENT;Column:id"`
-	Name     string `gorm:"type:varchar(128);Column:username;NOT NULL;uniqueIndex"`
-	Password string `gorm:"type:varchar(256);Column:password;NOT NULL"`
-	Salt     string `gorm:"type:char(8);Column:salt;NOT NULL"`
-	Otp      string `gorm:"type:varchar(512);Column:otp;NOT NULL"`
+	Id            uint64    `gorm:"PRIMARY_KEY;AUTO_INCREMENT;Column:id;<-:false"`
+	Name          string    `gorm:"type:varchar(128);Column:username;NOT NULL;uniqueIndex"`
+	Password      string    `gorm:"type:varchar(256);Column:password;NOT NULL"`
+	Salt          string    `gorm:"type:char(8);Column:salt;NOT NULL"`
+	Otp           string    `gorm:"type:varchar(512);Column:otp;NOT NULL"`
+	LastOperation time.Time `gorm:"-"`
+}
+
+func (user *User) CheckLogin(password string, otpCode string) bool {
+
+	hash := user.CalcPasswordHash(password)
+
+	if hash != user.Password {
+		return false
+	}
+
+	return cryptUtils.CheckTotp(user.Otp, otpCode)
+
+}
+func (user *User) CalcPasswordHash(password string) string {
+	return cryptUtils.HmacSha256(password, user.Salt)
 }

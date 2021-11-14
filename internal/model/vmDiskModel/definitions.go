@@ -8,7 +8,7 @@
 package vmDiskModel
 
 type VmDisk struct {
-	Id       uint64 `gorm:"PRIMARY_KEY;AUTO_INCREMENT;Column:id"`
+	Id       uint64 `gorm:"PRIMARY_KEY;AUTO_INCREMENT;Column:id;<-:false"`
 	VmId     uint64 `gorm:"Column:vm_id;NOT NULL"`
 	DiskPath string `gorm:"type:varchar(1024);Column:disk_path;NOT NULL"`
 }

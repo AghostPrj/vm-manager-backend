@@ -7,7 +7,12 @@
 
 package global
 
-const (
-	DefaultUserName = "admin"
-	ApplicationName = "vm-manager"
+import (
+	"github.com/AghostPrj/vm-manager-backend/internal/model/userModel"
+	"github.com/robfig/cron"
+)
+
+var (
+	AuthMap = make(map[string]*userModel.User)
+	Cron    = cron.New()
 )

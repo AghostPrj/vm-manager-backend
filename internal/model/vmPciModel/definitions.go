@@ -8,7 +8,7 @@
 package vmPciModel
 
 type VmPci struct {
-	Id    uint64 `gorm:"PRIMARY_KEY;AUTO_INCREMENT;Column:id"`
+	Id    uint64 `gorm:"PRIMARY_KEY;AUTO_INCREMENT;Column:id;<-:false"`
 	VmId  uint64 `gorm:"Column:vm_id;NOT NULL"`
 	PciId string `gorm:"type:varchar(32);Column:pci_id;NOT NULL"`
 }
