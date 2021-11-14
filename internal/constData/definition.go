@@ -69,7 +69,7 @@ const (
 
 	ConfDbAutoMigrateKey = "app.db.auto_migrate"
 	EnvDbAutoMigrateKey  = "app_db_auto_migrate"
-	DefaultDbAutoMigrate = false
+	DefaultDbAutoMigrate = true
 
 	ConfDbDsnKey = "app.db.dsn"
 	EnvDbDsnKey  = "app_db_dsn"

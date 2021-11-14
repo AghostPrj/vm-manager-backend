@@ -1,0 +1,55 @@
+app:
+  runtime:
+    proc:
+      # go进程数，默认2
+      num: 2
+  host:
+    net:
+      # 网络栈实现，默认未配置，必须配置！
+      type: dpdk
+  server:
+    listen:
+      # http监听端口，默认33289
+      port: 33289
+      # http监听地址，默认为空
+      host: 0.0.0.0
+  db:
+    # 数据库名，默认vm-manager
+    name: vm-manager
+    # 数据库域名，默认127.0.0.1
+    host: 127.0.0.1
+    # 数据库端口，默认3306
+    port: 3306
+    # 数据库链接字符集，默认utf8mb4
+    charset: utf8mb4
+    # 数据库排序方式，默认utf8mb4_general_ci
+    collation: utf8mb4_general_ci
+    # 时区，默认utc+8
+    loc: Asia%2FShanghai
+    # 超时时间，默认120s
+    timeout: 120s
+    # 数据库登录用户名
+    user: root
+    # 数据库登录密码
+    password: 123456
+    # 是否启用自动迁移表结构，默认开启
+    auto_migrate: true
+    # dsn配置，配了这个会覆盖除了连接池配置之外的其他配置
+    #dsn:
+    # 最大并发数，默认25
+    max_conn: 25
+    # 最大空闲数，默认5
+    max_idle: 5
+    # 连接最大存活时间，默认一小时
+    conn_life: 1h
+    # 连接最大空闲时间，默认15分钟
+    conn_idle: 15m
+  # 是否启用调试模式，默认否
+  debug: false
+  auth:
+    # 登录过期时间，默认15分钟
+    expire: 15m
+
+
+
+
