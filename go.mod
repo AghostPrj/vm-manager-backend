@@ -1,15 +1,24 @@
 module github.com/AghostPrj/vm-manager-backend
 
-go 1.17
+go 1.18
 
-require github.com/ggg17226/aghost-go-base v1.0.1
+require (
+	github.com/ggg17226/aghost-go-base v1.0.1
+	github.com/gin-contrib/cors v1.3.1
+	github.com/gin-gonic/gin v1.7.4
+	github.com/onrik/gorm-logrus v0.3.0
+	github.com/pquerna/otp v1.3.0
+	github.com/robfig/cron v1.2.0
+	github.com/sirupsen/logrus v1.8.1
+	github.com/spf13/viper v1.9.0
+	gorm.io/driver/mysql v1.1.3
+	gorm.io/gorm v1.22.3
+)
 
 require (
 	github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
-	github.com/gin-contrib/cors v1.3.1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.7.4 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.9.0 // indirect
@@ -27,17 +36,12 @@ require (
 	github.com/mitchellh/mapstructure v1.4.2 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/onrik/gorm-logrus v0.3.0 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
 	github.com/pkg/errors v0.8.1 // indirect
-	github.com/pquerna/otp v1.3.0 // indirect
-	github.com/robfig/cron v1.2.0 // indirect
-	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cast v1.4.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/spf13/viper v1.9.0 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
 	github.com/ugorji/go/codec v1.2.6 // indirect
 	golang.org/x/crypto v0.0.0-20211108221036-ceb1ce70b4fa // indirect
@@ -46,6 +50,4 @@ require (
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.64.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gorm.io/driver/mysql v1.1.3 // indirect
-	gorm.io/gorm v1.22.3 // indirect
 )
