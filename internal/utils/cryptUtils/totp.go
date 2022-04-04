@@ -10,6 +10,7 @@ package cryptUtils
 import (
 	"github.com/pquerna/otp"
 	"github.com/pquerna/otp/totp"
+	"time"
 )
 
 const (
@@ -25,11 +26,15 @@ func GenerateTotp(account string, issuer string) (*otp.Key, error) {
 	return key, err
 }
 
-func CheckTotp(totpUrl string, code string) bool {
+func ValidateTotp(totpUrl string, code string) bool {
 	key, err := otp.NewKeyFromURL(totpUrl)
 	if err != nil {
 		return false
 	}
 	return totp.Validate(code, key.Secret())
 
+}
+
+func generateTotpCode(totpSecret string) (string, error) {
+	return totp.GenerateCode(totpSecret, time.Now())
 }

@@ -25,6 +25,8 @@ jobs:
       - name: Get dependencies
         run: |
           go get -v -t -d ./...
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt-get install -y qemu-utils
 
       - name: Build
         run: go build -v ./...

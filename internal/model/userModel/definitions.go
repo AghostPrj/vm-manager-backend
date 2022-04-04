@@ -29,7 +29,7 @@ func (user *User) CheckLogin(password string, otpCode string) bool {
 		return false
 	}
 
-	return cryptUtils.CheckTotp(user.Otp, otpCode)
+	return cryptUtils.ValidateTotp(user.Otp, otpCode)
 
 }
 func (user *User) CalcPasswordHash(password string) string {

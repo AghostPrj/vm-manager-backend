@@ -17,3 +17,17 @@ func TestHmacSha256(t *testing.T) {
 		t.Fatalf("calc hmac sha256 error")
 	}
 }
+
+func TestOtp(t *testing.T) {
+	totp, err := GenerateTotp("test-account", "issuer")
+	if err != nil {
+		t.Fatalf("generate totp error:  %s", err.Error())
+	}
+	code, err := generateTotpCode(totp.Secret())
+	if err != nil {
+		t.Fatalf("generate totp code error:  %s", err.Error())
+	}
+	if !ValidateTotp(totp.String(), code) {
+		t.Fatalf("validate totp error")
+	}
+}
