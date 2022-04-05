@@ -57,6 +57,7 @@ func bindAppConfigKey() {
 		[]string{constData.ConfDbConnMaxIdleKey, constData.EnvDbConnMaxIdleKey},
 		[]string{constData.ConfDebugFlagKey, constData.EnvDebugFlagKey},
 		[]string{constData.ConfAuthExpireTimeKey, constData.EnvAuthExpireTimeKey},
+		[]string{constData.ConfAsyncOperationResultExpireTimeKey, constData.EnvAsyncOperationResultExpireTimeKey},
 	)
 }
 
@@ -81,7 +82,7 @@ func bindAppConfigDefaultValue() {
 	viper.SetDefault(constData.ConfDbConnMaxIdleKey, constData.DefaultDbConnMaxIdle)
 	viper.SetDefault(constData.ConfDebugFlagKey, constData.DefaultDebugFlag)
 	viper.SetDefault(constData.ConfAuthExpireTimeKey, constData.DefaultAuthExpireTime)
-
+	viper.SetDefault(constData.ConfAsyncOperationResultExpireTimeKey, constData.DefaultAsyncOperationResultExpireTime)
 }
 
 func checkAppConfig() {

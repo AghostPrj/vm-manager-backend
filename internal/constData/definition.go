@@ -102,4 +102,8 @@ const (
 	ConfAuthExpireTimeKey = "app.auth.expire"
 	EnvAuthExpireTimeKey  = "app_auth_expire"
 	DefaultAuthExpireTime = time.Minute * 15
+
+	ConfAsyncOperationResultExpireTimeKey = "app.async.operation.expire"
+	EnvAsyncOperationResultExpireTimeKey  = "app_async_operation_expire"
+	DefaultAsyncOperationResultExpireTime = time.Minute * 60
 )

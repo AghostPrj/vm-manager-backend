@@ -15,11 +15,12 @@ import (
 )
 
 func InitAndStartCron() {
-	buildRefreshAuthTask()
+	buildCleanAuthTask()
+	buildCleanAsyncOperationTask()
 	global.Cron.Start()
 }
 
-func buildRefreshAuthTask() {
+func buildCleanAuthTask() {
 	global.Cron.AddFunc("*/30 * * * * ?", func() {
 		needDeleteList := make([]string, 0)
 		for key, user := range global.AuthMap {
@@ -29,6 +30,23 @@ func buildRefreshAuthTask() {
 		}
 		for _, s := range needDeleteList {
 			delete(global.AuthMap, s)
+		}
+	})
+}
+
+func buildCleanAsyncOperationTask() {
+	global.Cron.AddFunc("*/30 * * * * ?", func() {
+		needDeleteList := make([]string, 0)
+
+		for key, asyncOperation := range global.AsyncOperationMap {
+			if asyncOperation.UpdateTime.Add(viper.GetDuration(constData.ConfAsyncOperationResultExpireTimeKey)).
+				Before(time.Now()) {
+				needDeleteList = append(needDeleteList, key)
+			}
+		}
+
+		for _, s := range needDeleteList {
+			delete(global.AsyncOperationMap, s)
 		}
 	})
 }

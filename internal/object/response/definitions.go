@@ -16,8 +16,8 @@ type BaseResponse struct {
 }
 
 type AsyncResponsePayload struct {
-	Uid        uint64        `json:"-"`
-	Code       int64         `json:"code"`
-	Data       interface{}   `json:"data,omitempty"`
-	UpdateTime time.Duration `json:"updateTime"`
+	Uid        uint64      `json:"-"`
+	Code       int64       `json:"code"`
+	Data       interface{} `json:"data,omitempty"`
+	UpdateTime time.Time   `json:"updateTime"`
 }
