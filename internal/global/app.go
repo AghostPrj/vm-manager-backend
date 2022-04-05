@@ -9,10 +9,12 @@ package global
 
 import (
 	"github.com/AghostPrj/vm-manager-backend/internal/model/userModel"
+	"github.com/AghostPrj/vm-manager-backend/internal/object/response"
 	"github.com/robfig/cron"
 )
 
 var (
-	AuthMap = make(map[string]*userModel.User)
-	Cron    = cron.New()
+	AuthMap           = make(map[string]*userModel.User)
+	AsyncOperationMap = make(map[string]*response.AsyncResponsePayload)
+	Cron              = cron.New()
 )

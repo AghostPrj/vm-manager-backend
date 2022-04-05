@@ -18,7 +18,7 @@ func checkHostNetType() {
 	if len(hostNetType) < 1 {
 		log.WithField("op", "startup").Panic("host net type not set")
 	}
-	if !(hostNetType == "tap" || hostNetType == "dpdk") {
+	if !(hostNetType == constData.HostNetTypeTap || hostNetType == constData.HostNetTypeDpdk) {
 		log.WithField("op", "startup").Panic("host net type setting error")
 	}
 }

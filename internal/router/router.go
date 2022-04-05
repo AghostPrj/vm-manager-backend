@@ -9,7 +9,6 @@ package router
 
 import (
 	"github.com/AghostPrj/vm-manager-backend/internal/constData"
-	"github.com/AghostPrj/vm-manager-backend/internal/controller/userController"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
@@ -30,19 +29,6 @@ func BuildGinRouter() *gin.Engine {
 	}
 	buildApiV1(router)
 	return router
-}
-
-func buildApiV1(router *gin.Engine) {
-	groupV1 := router.Group("/api/v1")
-
-	groupV1.POST("/login", userController.Login)
-	groupV1.Any("/logout", userController.Logout)
-
-	groupV1Admin := groupV1.Group("/admin")
-
-	groupV1Admin.GET("/vm")
-	groupV1Admin.GET("/vm/:id")
-
 }
 
 func StartGinServer(router *gin.Engine) {

@@ -3,7 +3,7 @@ module github.com/AghostPrj/vm-manager-backend
 go 1.18
 
 require (
-	github.com/ggg17226/aghost-go-base v1.0.1
+	github.com/ggg17226/aghost-go-base v1.0.2
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.7.7
 	github.com/onrik/gorm-logrus v0.3.0
@@ -11,8 +11,8 @@ require (
 	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/viper v1.10.1
-	gorm.io/driver/mysql v1.3.2
-	gorm.io/gorm v1.23.3
+	gorm.io/driver/mysql v1.3.3
+	gorm.io/gorm v1.23.4
 )
 
 require (
@@ -44,8 +44,8 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
-	golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064 // indirect
-	golang.org/x/sys v0.0.0-20220329152356-43be30ef3008 // indirect
+	golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29 // indirect
+	golang.org/x/sys v0.0.0-20220403205710-6acee93ad0eb // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/ini.v1 v1.66.4 // indirect
