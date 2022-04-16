@@ -37,7 +37,6 @@ func InitApp() {
 func bindAppConfigKey() {
 	configUtils.ConfigKeyList = append(configUtils.ConfigKeyList,
 		[]string{constData.ConfGoProcNumKey, constData.EnvGoProcNumKey},
-		[]string{constData.ConfHostNetTypeConfigKey, constData.EnvHostNetTypeConfigKey},
 		[]string{constData.ConfServerListenPortKey, constData.EnvServerListenPortKey},
 		[]string{constData.ConfServerListenHostKey, constData.EnvServerListenHostKey},
 		[]string{constData.ConfDbNameKey, constData.EnvDbNameKey},
@@ -86,7 +85,6 @@ func bindAppConfigDefaultValue() {
 }
 
 func checkAppConfig() {
-	checkHostNetType()
 	checkHttpListenConfig()
 }
 

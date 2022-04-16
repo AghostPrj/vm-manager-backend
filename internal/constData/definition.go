@@ -12,6 +12,11 @@ import (
 )
 
 const (
+	HostNetTypeTap  = "tap"
+	HostNetTypeDpdk = "dpdk"
+)
+
+const (
 	DefaultUserName    = "admin"
 	ApplicationName    = "vm-manager"
 	AuthCodeHeaderKey  = "x-aghost-auth-code"
@@ -20,12 +25,6 @@ const (
 	ConfGoProcNumKey = "app.runtime.proc.num"
 	EnvGoProcNumKey  = "app_runtime_proc_num"
 	DefaultGoProcNum = 2
-
-	ConfHostNetTypeConfigKey = "app.host.net.type"
-	EnvHostNetTypeConfigKey  = "app_host_net_type"
-
-	HostNetTypeTap  = "tap"
-	HostNetTypeDpdk = "dpdk"
 
 	ConfServerListenPortKey = "app.server.listen.port"
 	EnvServerListenPortKey  = "app_server_listen_port"

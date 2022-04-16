@@ -13,16 +13,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-func checkHostNetType() {
-	hostNetType := viper.GetString(constData.ConfHostNetTypeConfigKey)
-	if len(hostNetType) < 1 {
-		log.WithField("op", "startup").Panic("host net type not set")
-	}
-	if !(hostNetType == constData.HostNetTypeTap || hostNetType == constData.HostNetTypeDpdk) {
-		log.WithField("op", "startup").Panic("host net type setting error")
-	}
-}
-
 func checkHttpListenConfig() {
 	listenPort := viper.GetInt(constData.ConfServerListenPortKey)
 	if !(listenPort > 0 && listenPort < 65536) {
