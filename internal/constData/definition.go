@@ -22,10 +22,6 @@ const (
 	AuthCodeHeaderKey  = "x-aghost-auth-code"
 	UserInfoContextKey = "context_user_info"
 
-	ConfGoProcNumKey = "app.runtime.proc.num"
-	EnvGoProcNumKey  = "app_runtime_proc_num"
-	DefaultGoProcNum = 2
-
 	ConfServerListenPortKey = "app.server.listen.port"
 	EnvServerListenPortKey  = "app_server_listen_port"
 	DefaultServerListenPort = 33289

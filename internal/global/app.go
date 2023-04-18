@@ -17,4 +17,6 @@ var (
 	AuthMap           = make(map[string]*userModel.User)
 	AsyncOperationMap = make(map[string]*response.AsyncResponsePayload)
 	Cron              = cron.New()
+
+	HavingDpdk = false
 )

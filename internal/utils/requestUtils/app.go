@@ -9,7 +9,7 @@ package requestUtils
 
 import (
 	"encoding/json"
-	"github.com/AghostPrj/vm-manager-backend/internal/object/response"
+	"github.com/AghostPrj/vm-manager-backend/internal/constData"
 	"github.com/gin-gonic/gin"
 	"io"
 	"net/http"
@@ -18,19 +18,13 @@ import (
 func DecodeJsonRequestBody(c *gin.Context, payload interface{}) error {
 	bodyBytes, err := io.ReadAll(c.Request.Body)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, response.BaseResponse{
-			Code: 500,
-			Desc: "body error",
-		})
+		c.AbortWithStatusJSON(http.StatusOK, constData.DataErrorResponse)
 		return err
 	}
 
 	err = json.Unmarshal(bodyBytes, payload)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, response.BaseResponse{
-			Code: 500,
-			Desc: "body error",
-		})
+		c.AbortWithStatusJSON(http.StatusOK, constData.DataErrorResponse)
 		return err
 	}
 	return nil

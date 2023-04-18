@@ -10,6 +10,7 @@ package userService
 import (
 	"errors"
 	"github.com/AghostPrj/vm-manager-backend/internal/constData"
+	"github.com/AghostPrj/vm-manager-backend/internal/constData/errorCode"
 	"github.com/AghostPrj/vm-manager-backend/internal/global"
 	"github.com/AghostPrj/vm-manager-backend/internal/model/userModel"
 	"github.com/AghostPrj/vm-manager-backend/internal/utils/cryptUtils"
@@ -28,13 +29,13 @@ func Login(username string, password string, otpCode string) (*string, error) {
 		return nil, err
 	}
 	if user.Id < 1 || len(user.Name) < 1 {
-		return nil, errors.New("user not exists")
+		return nil, errors.New(errorCode.LoginFailedError)
 	}
 
 	loginSuccess := user.CheckLogin(password, otpCode)
 
 	if !loginSuccess {
-		return nil, err
+		return nil, errors.New(errorCode.LoginFailedError)
 	}
 	authCode := saveAuthData(user)
 	return &authCode, nil

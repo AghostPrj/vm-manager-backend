@@ -1,21 +1,19 @@
 package asyncQueryController
 
 import (
+	"errors"
 	"github.com/AghostPrj/vm-manager-backend/internal/constData"
+	"github.com/AghostPrj/vm-manager-backend/internal/constData/errorCode"
 	"github.com/AghostPrj/vm-manager-backend/internal/global"
 	"github.com/AghostPrj/vm-manager-backend/internal/model/userModel"
-	"github.com/AghostPrj/vm-manager-backend/internal/object/response"
+	"github.com/AghostPrj/vm-manager-backend/internal/utils/controllerErrorHandler"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func QueryAsyncResponse(context *gin.Context) {
 	userInfoInterface, exist := context.Get(constData.UserInfoContextKey)
 	if !exist {
-		context.AbortWithStatusJSON(http.StatusInternalServerError, response.BaseResponse{
-			Code: 500,
-			Desc: "get user info error",
-		})
+		controllerErrorHandler.HandlerError(context, nil, errors.New(errorCode.GetUserInfoError))
 		return
 	}
 
@@ -23,38 +21,24 @@ func QueryAsyncResponse(context *gin.Context) {
 	if userInfo, ok := userInfoInterface.(*userModel.User); ok {
 		uid = userInfo.Id
 	} else {
-		context.AbortWithStatusJSON(http.StatusInternalServerError, response.BaseResponse{
-			Code: 500,
-			Desc: "get user info error",
-		})
+		controllerErrorHandler.HandlerError(context, nil, errors.New(errorCode.GetUserInfoError))
 		return
 	}
 
 	asyncRequestId := context.Param("id")
 	if len(asyncRequestId) < 2 {
-		context.AbortWithStatusJSON(http.StatusBadRequest, response.BaseResponse{
-			Code: 400,
-			Desc: "async operation error",
-		})
+		controllerErrorHandler.HandlerError(context, nil, errors.New(errorCode.AsyncOperationError))
 		return
 	}
 	if asyncResponse, ok := global.AsyncOperationMap[asyncRequestId]; ok {
 		if asyncResponse.Uid == uid {
-			context.JSON(http.StatusOK, response.BaseResponse{
-				Code: 0,
-				Data: asyncResponse,
-			})
+			controllerErrorHandler.HandlerError(context, asyncResponse, nil)
 		} else {
-			context.JSON(http.StatusForbidden, response.BaseResponse{
-				Code: 403,
-			})
+			controllerErrorHandler.HandlerError(context, nil, errors.New(errorCode.PermissionError))
 		}
 		return
 	} else {
-		context.AbortWithStatusJSON(http.StatusNotFound, response.BaseResponse{
-			Code: 404,
-			Desc: "async operation not found",
-		})
+		controllerErrorHandler.HandlerError(context, nil, errors.New(errorCode.AsyncOperationNotFount))
 		return
 	}
 

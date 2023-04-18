@@ -10,6 +10,7 @@ package task
 import (
 	"github.com/AghostPrj/vm-manager-backend/internal/constData"
 	"github.com/AghostPrj/vm-manager-backend/internal/global"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"time"
 )
@@ -21,7 +22,7 @@ func InitAndStartCron() {
 }
 
 func buildCleanAuthTask() {
-	global.Cron.AddFunc("*/30 * * * * ?", func() {
+	err := global.Cron.AddFunc("*/30 * * * * ?", func() {
 		needDeleteList := make([]string, 0)
 		for key, user := range global.AuthMap {
 			if user.LastOperation.Add(viper.GetDuration(constData.ConfAuthExpireTimeKey)).Before(time.Now()) {
@@ -32,10 +33,17 @@ func buildCleanAuthTask() {
 			delete(global.AuthMap, s)
 		}
 	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"op":   "buildCleanAuthTask",
+			"step": "add cron task",
+			"err":  err,
+		}).Panic()
+	}
 }
 
 func buildCleanAsyncOperationTask() {
-	global.Cron.AddFunc("*/30 * * * * ?", func() {
+	err := global.Cron.AddFunc("*/30 * * * * ?", func() {
 		needDeleteList := make([]string, 0)
 
 		for key, asyncOperation := range global.AsyncOperationMap {
@@ -49,4 +57,11 @@ func buildCleanAsyncOperationTask() {
 			delete(global.AsyncOperationMap, s)
 		}
 	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"op":   "buildCleanAsyncOperationTask",
+			"step": "add cron task",
+			"err":  err,
+		}).Panic()
+	}
 }

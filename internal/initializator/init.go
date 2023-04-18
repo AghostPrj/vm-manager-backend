@@ -17,6 +17,8 @@ import (
 	"github.com/AghostPrj/vm-manager-backend/internal/model/vmPciModel"
 	"github.com/AghostPrj/vm-manager-backend/internal/model/vmPortModel"
 	"github.com/AghostPrj/vm-manager-backend/internal/service/userService"
+	"github.com/AghostPrj/vm-manager-backend/internal/utils/controllerErrorHandler"
+	"github.com/AghostPrj/vm-manager-backend/internal/utils/dpdkUtils"
 	"github.com/ggg17226/aghost-go-base/pkg/utils/configUtils"
 	gorm_logrus "github.com/onrik/gorm-logrus"
 	log "github.com/sirupsen/logrus"
@@ -32,11 +34,13 @@ func InitApp() {
 	configUtils.InitConfigAndLog()
 	checkAppConfig()
 	initDbClient()
+	controllerErrorHandler.Init()
+	global.HavingDpdk = dpdkUtils.CheckDpdkDevbindExists()
+
 }
 
 func bindAppConfigKey() {
 	configUtils.ConfigKeyList = append(configUtils.ConfigKeyList,
-		[]string{constData.ConfGoProcNumKey, constData.EnvGoProcNumKey},
 		[]string{constData.ConfServerListenPortKey, constData.EnvServerListenPortKey},
 		[]string{constData.ConfServerListenHostKey, constData.EnvServerListenHostKey},
 		[]string{constData.ConfDbNameKey, constData.EnvDbNameKey},
@@ -61,7 +65,6 @@ func bindAppConfigKey() {
 }
 
 func bindAppConfigDefaultValue() {
-	viper.SetDefault(constData.ConfGoProcNumKey, constData.DefaultGoProcNum)
 	viper.SetDefault(constData.ConfServerListenPortKey, constData.DefaultServerListenPort)
 	viper.SetDefault(constData.ConfServerListenHostKey, constData.DefaultServerListenHost)
 	viper.SetDefault(constData.ConfDbNameKey, constData.DefaultDbName)
@@ -135,18 +138,69 @@ func initDbClient() {
 	global.DBClient = DBClient
 
 	if viper.GetBool(constData.ConfDbAutoMigrateKey) {
-		global.DBClient.AutoMigrate(&vmDiskModel.VmDisk{})
-		global.DBClient.AutoMigrate(&vmPciModel.VmPci{})
-		global.DBClient.AutoMigrate(&vmMacModel.VmMac{})
-		global.DBClient.AutoMigrate(&vmPortModel.VmPort{})
-		global.DBClient.AutoMigrate(&vmListModel.VmList{})
-		global.DBClient.AutoMigrate(&userModel.User{})
+		err := global.DBClient.AutoMigrate(&vmDiskModel.VmDisk{})
+		if err != nil {
+			log.WithFields(log.Fields{
+				"op":     "init",
+				"step":   "db auto migrate",
+				"target": "vmDiskModel",
+				"err":    err,
+			}).Panic()
+		}
+		err = global.DBClient.AutoMigrate(&vmPciModel.VmPci{})
+		if err != nil {
+			log.WithFields(log.Fields{
+				"op":     "init",
+				"step":   "db auto migrate",
+				"target": "vmPciModel",
+				"err":    err,
+			}).Panic()
+		}
+		err = global.DBClient.AutoMigrate(&vmMacModel.VmMac{})
+		if err != nil {
+			log.WithFields(log.Fields{
+				"op":     "init",
+				"step":   "db auto migrate",
+				"target": "vmMacModel",
+				"err":    err,
+			}).Panic()
+		}
+		err = global.DBClient.AutoMigrate(&vmPortModel.VmPort{})
+		if err != nil {
+			log.WithFields(log.Fields{
+				"op":     "init",
+				"step":   "db auto migrate",
+				"target": "vmPortModel",
+				"err":    err,
+			}).Panic()
+		}
+		err = global.DBClient.AutoMigrate(&vmListModel.VmList{})
+		if err != nil {
+			log.WithFields(log.Fields{
+				"op":     "init",
+				"step":   "db auto migrate",
+				"target": "vmListModel",
+				"err":    err,
+			}).Panic()
+		}
+		err = global.DBClient.AutoMigrate(&userModel.User{})
+		if err != nil {
+			log.WithFields(log.Fields{
+				"op":     "init",
+				"step":   "db auto migrate",
+				"target": "userModel",
+				"err":    err,
+			}).Panic()
+		}
 		if !userService.CheckDefaultUserExist() {
 			user, password, err := userService.CreateUserWithoutPassword(constData.DefaultUserName)
 			if err != nil {
-				log.WithField("err", err).
-					WithField("op", "init").
-					Panic("create default admin user error")
+				log.WithFields(log.Fields{
+					"op":     "init",
+					"step":   "db auto migrate",
+					"target": "create default user",
+					"err":    err,
+				}).Panic("create default admin user error")
 			}
 			log.WithFields(log.Fields{
 				"user":     user.Name,
