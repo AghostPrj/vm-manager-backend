@@ -1,8 +1,4 @@
 app:
-  runtime:
-    proc:
-      # go进程数，默认2
-      num: 2
   host:
     net:
       # 网络栈实现，默认未配置，必须配置！

@@ -52,6 +52,7 @@ func InitApp() {
 				global.HavingOvs = false
 			}
 		}
+
 	}
 
 }
