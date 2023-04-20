@@ -19,6 +19,7 @@ import (
 	"github.com/AghostPrj/vm-manager-backend/internal/service/userService"
 	"github.com/AghostPrj/vm-manager-backend/internal/utils/controllerErrorHandler"
 	"github.com/AghostPrj/vm-manager-backend/internal/utils/dpdkUtils"
+	"github.com/AghostPrj/vm-manager-backend/internal/utils/openVswitchUtils"
 	"github.com/ggg17226/aghost-go-base/pkg/utils/configUtils"
 	gorm_logrus "github.com/onrik/gorm-logrus"
 	log "github.com/sirupsen/logrus"
@@ -36,6 +37,22 @@ func InitApp() {
 	initDbClient()
 	controllerErrorHandler.Init()
 	global.HavingDpdk = dpdkUtils.CheckDpdkDevbindExists()
+	global.HavingOvs = openVswitchUtils.Init()
+
+	if global.HavingOvs {
+		exists, err := openVswitchUtils.CheckBridgeExists()
+		if err == nil && !exists {
+			err := openVswitchUtils.CreateBridge()
+			if err != nil {
+				log.WithFields(log.Fields{
+					"op":   "init_app",
+					"step": "init_ovs_bridge",
+					"err":  err,
+				}).Error()
+				global.HavingOvs = false
+			}
+		}
+	}
 
 }
 

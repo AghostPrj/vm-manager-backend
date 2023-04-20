@@ -19,4 +19,5 @@ var (
 	Cron              = cron.New()
 
 	HavingDpdk = false
+	HavingOvs  = false
 )

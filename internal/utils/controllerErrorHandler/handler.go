@@ -34,6 +34,7 @@ func Init() {
 	addError(400, errorCode.DeviceNotFoundError)
 	addError(400, errorCode.DeviceDriverNotSupportError)
 
+	addError(400, errorCode.NoOvsSupportError)
 }
 
 func addError(code int64, errorString string) {

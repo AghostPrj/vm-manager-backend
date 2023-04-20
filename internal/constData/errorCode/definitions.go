@@ -19,4 +19,6 @@ const (
 	NoDpdkSupportError          = "no dpdk support"
 	DeviceNotFoundError         = "device not found"
 	DeviceDriverNotSupportError = "driver not support"
+
+	NoOvsSupportError = "no ovs support"
 )
