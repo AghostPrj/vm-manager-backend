@@ -3,6 +3,7 @@ module github.com/AghostPrj/vm-manager-backend
 go 1.19
 
 require (
+	github.com/digitalocean/go-openvswitch v0.0.0-20230210190010-977d98586f70
 	github.com/ggg17226/aghost-go-base v1.0.6
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-gonic/gin v1.9.0
@@ -20,7 +21,6 @@ require (
 	github.com/boombuler/barcode v1.0.1 // indirect
 	github.com/bytedance/sonic v1.8.7 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
-	github.com/digitalocean/go-openvswitch v0.0.0-20230210190010-977d98586f70 // indirect
 	github.com/docker/libcontainer v2.2.1+incompatible // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
